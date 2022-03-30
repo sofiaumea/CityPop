@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Alert, TouchableOpacity } from 'react-native';import AppLoading from 'expo-app-loading';
-
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableHighlight, TouchableOpacity } from 'react-native';import AppLoading from 'expo-app-loading';
 
 
 import {
@@ -27,7 +26,7 @@ import {
 
 
 
-export default function HomeScreen({ navigation: { navigate } }) {
+export default function CityScreen({ navigation: { navigate } }) {
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -52,25 +51,16 @@ export default function HomeScreen({ navigation: { navigate } }) {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.logo}>CITYPOP</Text>
-      <Image source={require('./assets/images/stad.png')} style={styles.imageCity}/>
-      <TouchableOpacity onPress={() => navigate('City')}> 
-        <View style={styles.city}>
-            <Text style={styles.text}>Search by city</Text>
-        </View>
+      <TouchableOpacity onPress={() => navigate('Home')}> 
+        <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <View style={styles.country}>
-        <Text style={styles.text}>Search by country</Text>
+      <View style={styles.city}>
       </View>
     </SafeAreaView>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -91,32 +81,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
 
-  imageCity:{
-    bottom: 30,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
 
   city: {
-    width: 250,
-    height: 70,
-    backgroundColor: '#F8EEE4', 
-    borderRadius: 35,
-    shadowColor: 'rgba(123, 60, 0, 0.16)',
-    shadowOffset: {height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  text: {
-    fontFamily: 'Montserrat_300Light',
-  },
-
-  country: {
-    top: 40,
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 
