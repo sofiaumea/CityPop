@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F2DECB',
     alignItems: 'center',
-    justifyContent: 'center',
+
   },
 
   logo: {
-    bottom: 50,
+    top: 60,
     fontFamily: 'Montserrat_700Bold',
     color: '#FFF6ED',
     fontSize: 50,
@@ -92,13 +92,14 @@ const styles = StyleSheet.create({
   },
 
   imageCity:{
-    bottom: 30,
+    top: 80,
     width: 250,
     height: 250,
     resizeMode: 'contain',
   },
 
   city: {
+    top: 100,
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   },
 
   country: {
-    top: 40,
+    top: 140,
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 

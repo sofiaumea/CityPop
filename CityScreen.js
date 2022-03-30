@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableHighlight, TouchableOpacity } from 'react-native';import AppLoading from 'expo-app-loading';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import AppLoading from 'expo-app-loading';
 
 
 import {
@@ -27,6 +28,8 @@ import {
 
 
 export default function CityScreen({ navigation: { navigate } }) {
+    const [text, onChangeText] = React.useState(null);
+
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -51,12 +54,22 @@ export default function CityScreen({ navigation: { navigate } }) {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <View style={styles.city}>
+      <Text style={styles.text}>SEARCH BY CITY</Text>
+      <View style={styles.inputbox}>
+        <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="Enter a city.."
+            keyboardType="default"
+        />
       </View>
     </SafeAreaView>
   );
@@ -66,23 +79,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F2DECB',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 
   logo: {
-    bottom: 50,
+    left: 10, 
+    top: 10,
     fontFamily: 'Montserrat_700Bold',
     color: '#FFF6ED',
-    fontSize: 50,
+    fontSize: 20,
     shadowColor: 'rgba(123, 60, 0, 0.16)',
     shadowOffset: {height: 2},
     shadowOpacity: 1,
     shadowRadius: 5,
   },
 
+  text: {
+    top: 180,
+    textAlign: 'center',
+    fontFamily: 'Montserrat_700Bold',
+    fontSize: 25,
+    color: '#d28471',
+  },
 
-  city: {
+  inputbox: {
+    top: 230,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 
@@ -93,6 +115,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  input: {
+      fontFamily: 'Montserrat_300Light',
   },
 
 });
