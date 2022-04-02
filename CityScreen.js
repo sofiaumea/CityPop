@@ -27,7 +27,7 @@ import {
 
 
 
-export default function CityScreen({ navigation: { navigate } }) {
+export default function CountryScreen({ navigation: { navigate } }) {
     const [text, onChangeText] = React.useState(null);
 
   let [fontsLoaded] = useFonts({
@@ -61,13 +61,13 @@ export default function CityScreen({ navigation: { navigate } }) {
       <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <Text style={styles.text}>SEARCH BY CITY</Text>
+      <Text style={styles.text}>SEARCH BY COUNTRY</Text>
       <View style={styles.inputbox}>
         <TextInput
             style={styles.input}
             onChangeText={onChangeText}
             value={text}
-            placeholder="Enter a city.."
+            placeholder="Enter a country.."
             keyboardType="default"
         />
       </View>

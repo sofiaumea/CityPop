@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Alert, TouchableOpacity } from 'react-native';import AppLoading from 'expo-app-loading';
-
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import AppLoading from 'expo-app-loading';
 
 
 import {
@@ -27,7 +27,14 @@ import {
 
 
 
-export default function HomeScreen({ navigation: { navigate } }) {
+export default function CityScreen({ navigation: { navigate } }) {
+
+  //Här ska vi läsa av om staden finns i JSON, sedan visas error-meddelande eller en ny sida visas
+ function setInput(value) {
+  var countryinput = value.nativeEvent.text
+  alert(countryinput)
+}
+
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -56,75 +63,51 @@ export default function HomeScreen({ navigation: { navigate } }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.logo}>CITYPOP</Text>
-      <Image source={require('./assets/images/stad.png')} style={styles.imageCity}/>
-
-      <View style={styles.city}>
-        <TouchableOpacity onPress={() => navigate('City')}> 
-        <Text style={styles.text}>Search by city</Text>
-        </TouchableOpacity>
-      </View>
-
-    
-      <View style={styles.country}>
-        <TouchableOpacity onPress={() => navigate('Country')}> 
-        <Text style={styles.text}>Search by country</Text>
-        </TouchableOpacity>
-      </View>
-
-
+      <TouchableOpacity onPress={() => navigate('Home')}> 
+        <Text style={styles.logo}>CITYPOP</Text>
+      </TouchableOpacity>
+      <Text style={styles.text}>SEARCH BY CITY</Text>
+      <View style={styles.inputbox}>
+      <TextInput underlineColorAndroid = "transparent"
+               placeholder = "Enter a city.."
+               autoCapitalize = "none"
+               onSubmitEditing={setInput}
+               keyboardType="default"/>
+       </View>
     </SafeAreaView>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F2DECB',
-    alignItems: 'center',
-
   },
 
   logo: {
-    top: 60,
+    left: 10, 
+    top: 10,
     fontFamily: 'Montserrat_700Bold',
     color: '#FFF6ED',
-    fontSize: 50,
+    fontSize: 20,
     shadowColor: 'rgba(123, 60, 0, 0.16)',
     shadowOffset: {height: 2},
     shadowOpacity: 1,
     shadowRadius: 5,
-  },
-
-  imageCity:{
-    top: 80,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
-
-  city: {
-    top: 100,
-    width: 250,
-    height: 70,
-    backgroundColor: '#F8EEE4', 
-    borderRadius: 35,
-    shadowColor: 'rgba(123, 60, 0, 0.16)',
-    shadowOffset: {height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 
   text: {
-    fontFamily: 'Montserrat_300Light',
+    top: 180,
+    textAlign: 'center',
+    fontFamily: 'Montserrat_700Bold',
+    fontSize: 25,
+    color: '#d28471',
   },
 
-  country: {
-    top: 140,
+  inputbox: {
+    top: 230,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 
@@ -135,6 +118,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  input: {
+      fontFamily: 'Montserrat_300Light',
   },
 
 });

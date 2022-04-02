@@ -28,7 +28,14 @@ import {
 
 
 export default function CountryScreen({ navigation: { navigate } }) {
-    const [text, onChangeText] = React.useState(null);
+  //const [countryinput] = React.useState(null);
+
+
+ //Här ska vi läsa av om landet finns i JSON, sedan visas error-meddelande eller en ny sida visas
+ function setInput(value) {
+  var countryinput = value.nativeEvent.text
+  alert(countryinput)
+}
 
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
@@ -55,6 +62,7 @@ export default function CountryScreen({ navigation: { navigate } }) {
     return <AppLoading />;
   }
 
+  //Shows the ten biggest countrys regarding population
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,15 +70,14 @@ export default function CountryScreen({ navigation: { navigate } }) {
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
       <Text style={styles.text}>SEARCH BY COUNTRY</Text>
+
       <View style={styles.inputbox}>
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder="Enter a country.."
-            keyboardType="default"
-        />
-      </View>
+      <TextInput underlineColorAndroid = "transparent"
+               placeholder = "Enter a country.."
+               autoCapitalize = "none"
+               onSubmitEditing={setInput}
+               keyboardType="default"/>
+       </View>
     </SafeAreaView>
   );
 }
@@ -120,5 +127,9 @@ const styles = StyleSheet.create({
   input: {
       fontFamily: 'Montserrat_300Light',
   },
+
+  submitButton: {
+    top: 200,
+  }
 
 });
