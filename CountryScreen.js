@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, Alert, TouchableOpacity } from 'react-native';import AppLoading from 'expo-app-loading';
-
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import AppLoading from 'expo-app-loading';
 
 
 import {
@@ -27,7 +27,9 @@ import {
 
 
 
-export default function HomeScreen({ navigation: { navigate } }) {
+export default function CountryScreen({ navigation: { navigate } }) {
+    const [text, onChangeText] = React.useState(null);
+
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -56,70 +58,53 @@ export default function HomeScreen({ navigation: { navigate } }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.logo}>CITYPOP</Text>
-      <Image source={require('./assets/images/stad.png')} style={styles.imageCity}/>
-      <TouchableOpacity onPress={() => navigate('City')}> 
-        <View style={styles.city}>
-            <Text style={styles.text}>Search by city</Text>
-        </View>
+      <TouchableOpacity onPress={() => navigate('Home')}> 
+        <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigate('Country')}> 
-        <View style={styles.country}>
-          <Text style={styles.text}>Search by country</Text>
-        </View>
-      </TouchableOpacity>
+      <Text style={styles.text}>SEARCH BY COUNTRY</Text>
+      <View style={styles.inputbox}>
+        <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="Enter a country.."
+            keyboardType="default"
+        />
+      </View>
     </SafeAreaView>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F2DECB',
-    alignItems: 'center',
-
   },
 
   logo: {
-    top: 60,
+    left: 10, 
+    top: 10,
     fontFamily: 'Montserrat_700Bold',
     color: '#FFF6ED',
-    fontSize: 50,
+    fontSize: 20,
     shadowColor: 'rgba(123, 60, 0, 0.16)',
     shadowOffset: {height: 2},
     shadowOpacity: 1,
     shadowRadius: 5,
-  },
-
-  imageCity:{
-    top: 80,
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
-
-  city: {
-    top: 100,
-    width: 250,
-    height: 70,
-    backgroundColor: '#F8EEE4', 
-    borderRadius: 35,
-    shadowColor: 'rgba(123, 60, 0, 0.16)',
-    shadowOffset: {height: 2},
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 
   text: {
-    fontFamily: 'Montserrat_300Light',
+    top: 180,
+    textAlign: 'center',
+    fontFamily: 'Montserrat_700Bold',
+    fontSize: 25,
+    color: '#d28471',
   },
 
-  country: {
-    top: 140,
+  inputbox: {
+    top: 230,
+    marginRight: 'auto',
+    marginLeft: 'auto',
     width: 250,
     height: 70,
     backgroundColor: '#F8EEE4', 
@@ -130,6 +115,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  input: {
+      fontFamily: 'Montserrat_300Light',
   },
 
 });
