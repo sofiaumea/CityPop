@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button } from 'react-native';
 import AppLoading from 'expo-app-loading';
+
 
 
 import {
@@ -26,16 +27,34 @@ import {
 } from '@expo-google-fonts/montserrat';
 
 
+//För staden kan vi hämta ut först population bara
+export default function SearchCountryScreen({ navigation: { navigate } }) {
+  const [isLoading, setLoading] = useState(false);
+  const [countryData, setData] = useState([]);
 
-export default function CountryScreen({ navigation: { navigate } }) {
-  //const [countryinput] = React.useState(null);
+  const fetchData = (countryinput) => {
+    fetch(`http://api.geonames.org/searchJSON?q=${countryinput}&maxRows=3&featureClass=P&orderby=population&username=weknowit`)
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  }
 
+  useEffect(() => {
+    setLoading(true);
+    fetchData();
+  }, []);
 
- //Här ska vi läsa av om landet finns i JSON, sedan visas error-meddelande eller en ny sida visas
- function setInput(value) {
-  var countryinput = value.nativeEvent.text
-  alert(countryinput)
-}
+  //MÅSTE FIXA SÅ ETT FELMEDDELANDE PLoPPAR upp om landet inte finns
+  const navigateToScreen  = () => {
+    navigate('Country', {
+      data: countryData,
+    })
+  }
+
+  if (isLoading) {
+    <Text>Loading...</Text>;
+  }
 
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
@@ -61,26 +80,24 @@ export default function CountryScreen({ navigation: { navigate } }) {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
-
-  //Shows the ten biggest countrys regarding population
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity onPress={() => navigate('Home')}> 
+ 
+    return (
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
       <Text style={styles.text}>SEARCH BY COUNTRY</Text>
-
       <View style={styles.inputbox}>
       <TextInput underlineColorAndroid = "transparent"
                placeholder = "Enter a country.."
                autoCapitalize = "none"
-               onSubmitEditing={setInput}
+               onChangeText={text => fetchData(text)}
+               onSubmitEditing={navigateToScreen}
                keyboardType="default"/>
        </View>
-    </SafeAreaView>
-  );
-}
+      </SafeAreaView>
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {
@@ -127,9 +144,5 @@ const styles = StyleSheet.create({
   input: {
       fontFamily: 'Montserrat_300Light',
   },
-
-  submitButton: {
-    top: 200,
-  }
 
 });

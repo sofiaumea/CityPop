@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button } from 'react-native';
 import AppLoading from 'expo-app-loading';
 
+//Från countryscreen ska vi navigera till cityscreen och få upp populationen för den staden
 import {
   useFonts,
   Montserrat_100Thin,
@@ -23,11 +24,15 @@ import {
   Montserrat_800ExtraBold_Italic,
   Montserrat_900Black_Italic,
 } from '@expo-google-fonts/montserrat';
+import TestSearchCity from './TestSearchCity';
 
 
 
-export default function CityScreen({ route, navigation: { navigate } }) {
-  const {population, name} = route.params;
+export default function CountryScreen({ route, navigation: { navigate } }) {
+  const {data} = route.params;
+
+
+
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -55,15 +60,26 @@ export default function CityScreen({ route, navigation: { navigate } }) {
 
     return (
       <SafeAreaView style={styles.container}>
+
       <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <Text style={styles.citylogo}>THE CITY..</Text>
-      <View style={styles.textbox}>
-        <Text style={styles.city}>{name}</Text>
-        <Text style={styles.text}>has a population size of</Text>
-        <Text style={styles.populationtext}>{population} people</Text>
+
+      <Text style={styles.countrylogo}>{data.geonames[0].countryName}</Text>
+      
+      {/*Iterate through data containing city names*/}
+      <View>
+      {data.geonames.map(city => {
+          return (
+            <View style={styles.textbox}>
+              <TouchableOpacity onPress={() => navigate('TestCity', {input: city.name})}> 
+                <Text style={styles.cityname}>{city.name}</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        })}
       </View>
+
       </SafeAreaView>
     );
   }
@@ -95,16 +111,16 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
 
-  text: {
+  cityname: {
     textAlign: 'center',
     textTransform: 'uppercase',
-    fontFamily: 'Montserrat_300Light',
-    fontSize: 10,
+    fontFamily: 'Montserrat_400Regular',
+    fontSize: 12,
     color: '#000000',
   },
 
   populationtext: {
-    top: 30,
+    top: 20,
     textAlign: 'center',
     textTransform: 'uppercase',
     fontFamily: 'Montserrat_500Medium',
@@ -112,20 +128,22 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
 
-  citylogo: {
+  countrylogo: {
     top: 180,
     textAlign: 'center',
+    textTransform: 'uppercase',
     fontFamily: 'Montserrat_700Bold',
     fontSize: 25,
     color: '#d28471',
   },
 
   textbox: {
+    marginTop: 20,
     top: 200,
     marginRight: 'auto',
     marginLeft: 'auto',
     width: 250,
-    height: 200,
+    height: 70,
     backgroundColor: '#F8EEE4', 
     borderRadius: 35,
     shadowColor: 'rgba(123, 60, 0, 0.16)',

@@ -30,11 +30,12 @@ import {
 //För staden kan vi hämta ut först population bara
 
 export default function SearchCityScreen({ navigation: { navigate } }) {
+
   const [isLoading, setLoading] = useState(false);
   const [cityData, setData] = useState([]);
 
-  const fetchData = (countryinput) => {
-    fetch(`http://api.geonames.org/searchJSON?q=${countryinput}&maxRows=1&username=weknowit`)
+  const fetchData = (cityinput) => {
+    fetch(`http://api.geonames.org/searchJSON?q=${cityinput}&maxRows=1&username=weknowit`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
