@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button } from 'react-native';
 import AppLoading from 'expo-app-loading';
-
 
 import {
   useFonts,
@@ -24,12 +23,12 @@ import {
   Montserrat_800ExtraBold_Italic,
   Montserrat_900Black_Italic,
 } from '@expo-google-fonts/montserrat';
+import { ActivityIndicator } from 'react-native-paper';
+import { FlatList } from 'react-native-gesture-handler';
 
 
-
-export default function CountryScreen({ navigation: { navigate } }) {
-    const [text, onChangeText] = React.useState(null);
-
+export default function CityScreen({ route, navigation: { navigate } }) {
+  const {population, name} = route.params;
   let [fontsLoaded] = useFonts({
     Montserrat_100Thin,
     Montserrat_200ExtraLight,
@@ -55,25 +54,19 @@ export default function CountryScreen({ navigation: { navigate } }) {
     return <AppLoading />;
   }
 
-
-  return (
-    <SafeAreaView style={styles.container}>
+    return (
+      <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
-      <Text style={styles.text}>SEARCH BY COUNTRY</Text>
-      <View style={styles.inputbox}>
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder="Enter a country.."
-            keyboardType="default"
-        />
+      <Text style={styles.text}>THE CITY..</Text>
+      <View>
+        <Text>population: {population}</Text>
+        <Text>name: {name}</Text>
       </View>
-    </SafeAreaView>
-  );
-}
+      </SafeAreaView>
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {

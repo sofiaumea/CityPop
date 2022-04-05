@@ -60,14 +60,14 @@ export default function HomeScreen({ navigation: { navigate } }) {
       <Image source={require('./assets/images/stad.png')} style={styles.imageCity}/>
 
       <View style={styles.city}>
-        <TouchableOpacity onPress={() => navigate('City')}> 
+        <TouchableOpacity onPress={() => navigate('CitySearch')}> 
         <Text style={styles.text}>Search by city</Text>
         </TouchableOpacity>
       </View>
 
     
       <View style={styles.country}>
-        <TouchableOpacity onPress={() => navigate('Country')}> 
+        <TouchableOpacity onPress={() => navigate('CountrySearch')}> 
         <Text style={styles.text}>Search by country</Text>
         </TouchableOpacity>
       </View>

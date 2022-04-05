@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Button } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import AppLoading from 'expo-app-loading';
-
 
 
 import {
@@ -28,34 +27,21 @@ import {
 
 
 //För staden kan vi hämta ut först population bara
-
-export default function SearchCityScreen({ navigation: { navigate } }) {
-  const [isLoading, setLoading] = useState(false);
-  const [cityData, setData] = useState([]);
-
-  const fetchData = (countryinput) => {
-    fetch(`http://api.geonames.org/searchJSON?q=${countryinput}&maxRows=1&username=weknowit`)
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    fetchData();
-  }, []);
+const cityURL = 'http://api.geonames.org/searchJSON?q=london&maxRows=1&username=weknowit';
 
 
-  const navigateToScreen  = () => {
-    navigate('City', {
-      population: cityData.geonames[0].population,
-      name: cityData.geonames[0].name,
-    })
-  }
+export default function CityScreen({ navigation: { navigate } }) {
 
-  if (isLoading) {
-    <Text>Loading...</Text>;
+  //Här ska vi läsa av om staden finns i JSON, sedan visas error-meddelande eller en ny sida visas
+ function setInput(value) {
+  var countryinput = value.nativeEvent.text
+  checkCity(countryinput)
+}
+  function checkCity(input){
+    const [isLoading, setLoading] = useState(true);
+    const [data, setData] = useState([]);
+
+    
   }
 
   let [fontsLoaded] = useFonts({
@@ -82,10 +68,11 @@ export default function SearchCityScreen({ navigation: { navigate } }) {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
- 
-    return (
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={() => navigate('Home')}> 
+
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity onPress={() => navigate('Home')}> 
         <Text style={styles.logo}>CITYPOP</Text>
       </TouchableOpacity>
       <Text style={styles.text}>SEARCH BY CITY</Text>
@@ -93,13 +80,12 @@ export default function SearchCityScreen({ navigation: { navigate } }) {
       <TextInput underlineColorAndroid = "transparent"
                placeholder = "Enter a city.."
                autoCapitalize = "none"
-               onChangeText={text => fetchData(text)}
-               onSubmitEditing={navigateToScreen}
+               onSubmitEditing={setInput}
                keyboardType="default"/>
        </View>
-      </SafeAreaView>
-    );
-  }
+    </SafeAreaView>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
