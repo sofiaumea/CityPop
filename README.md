@@ -7,7 +7,7 @@ The application is build upon an API from Geonames.
 1. Download Expo and create an account
 2. Install NodeJS
 3. Clone this respiratory
-4. Open terminal on your computer and write "cd CityPop" or use the terminal in the IDE if the project is open.
+4. Make sure terminal is in the correct folder - CityPop.
 5. Write npm install --global expo-cli and npm install in your terminal.
 6. To start the program with expo, write expo start. If you are not yet logged in, type expo login.
 7. In the terminal you will now see a url address like http://localhost:19001 and a QR-code to scan. The url address and QR-code will lead you to a development environment where you can see the changes from the project live. 
